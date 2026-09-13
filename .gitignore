@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+data/*
+!data/.gitkeep
+
+.ipynb_checkpoints/
+
+.env
+dev_env.sh
+
+.DS_Store
+.idea/
+.vscode/
