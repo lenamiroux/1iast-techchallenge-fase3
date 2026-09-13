@@ -15,3 +15,5 @@ dev_env.sh
 .DS_Store
 .idea/
 .vscode/
+
+reports/models/
