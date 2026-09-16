@@ -17,7 +17,7 @@ públicos precisam **antecipar risco**, não só descrevê-lo depois do fato.
 Treinar um modelo supervisionado que preveja `label_alfabetizado` (1 =
 alfabetizado, 0 = não) a partir de variáveis territoriais, de rede de
 ensino e socioeconômicas — nunca a partir da proficiência em si, que seria
-vazamento direto (a proficiência *é* a origem do rótulo).
+data leakage (a proficiência *é* a origem do rótulo).
 
 ## Descrição da base utilizada
 
@@ -52,14 +52,14 @@ para a investigação completa.
 ## Etapas de modelagem
 
 1. **EDA** (`01_eda.ipynb`) — correção do rótulo, duas investigações de
-   vazamento (`presenca`/`proficiencia` e `taxa_alfabetizacao_municipio`),
+   data leakage (`presenca`/`proficiencia` e `taxa_alfabetizacao_municipio`),
    hipóteses territoriais/temporais/de rede.
 2. **Engenharia de atributos** (`build_features.py`) — exclusão de
-   vazamento, filtro de amostra insuficiente (rede Privada, n=24), flags
+   data leakage, filtro de amostra insuficiente (rede Privada, n=24), flags
    de ausência estrutural, merge do enriquecimento externo.
 3. **Split treino/teste por município** (`split.py`) — `GroupShuffleSplit`,
    não split por aluno, pra evitar que o mesmo município apareça nos dois
-   conjuntos (mitiga o vazamento sutil de `taxa_alfabetizacao_municipio`).
+   conjuntos (mitiga o data leakage sutil de `taxa_alfabetizacao_municipio`).
 4. **Pipeline de pré-processamento** (`pipeline.py`) — `ColumnTransformer`
    com imputação (mediana) + padronização pras numéricas, one-hot pras
    categóricas, integrado ao modelo num único `Pipeline` scikit-learn.
@@ -157,7 +157,7 @@ redundante com o contexto municipal já presente na base original.
   Único) pra romper o teto estrutural de predição individual.
 - Testar Gradient Boosting (XGBoost/LightGBM) com ajuste de
   hiperparâmetros via `GroupKFold` (respeitando o mesmo cuidado de
-  vazamento por município).
+  leakage por município).
 - Buscar uma fonte de dados socioeconômicos municipais mais recente que o
   Censo 2010 (ex.: estimativas do IBGE Cidades, quando disponíveis a nível
   municipal).
